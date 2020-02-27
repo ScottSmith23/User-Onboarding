@@ -27,8 +27,8 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
           )}
         </label>
         <label>
-          Size:
-          <Field id="size" type="text" name="size" placeholder="size" />
+          Email:
+          <Field id="size" type="email" name="size" placeholder="size" />
           {touched.size && errors.size && (
             <p className="errors" style={{ color: "red" }}>
               {errors.size}
@@ -82,7 +82,7 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
   );
 };
 
-const FormikAnimalForm = withFormik({
+const FormikOnboardingForm = withFormik({
   mapPropsToValues({ species, size, diet, vaccinations, notes }) {
     return {
       species: species || "",
@@ -105,4 +105,4 @@ const FormikAnimalForm = withFormik({
     });
   }
 })(OnboardingForm);
-export default FormikAnimalForm;
+export default FormikOnboardingForm;
