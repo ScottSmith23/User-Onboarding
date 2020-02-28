@@ -28,12 +28,22 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
         </label>
         <label>
           Email:
-          <Field id="size" type="email" name="size" placeholder="size" />
-          {touched.size && errors.size && (
+          <Field id="email" type="email" name="email" placeholder="email" />
+          {touched.email && errors.email && (
             <p className="errors" style={{ color: "red" }}>
-              {errors.size}
+              {errors.email}
             </p>
           )}
+        </label>
+        <label>
+          Password:
+          <Field id="password" type="password" name="password" placeholder="password" />
+          {/* {touched.password && errors.password && (
+            <p className="errors" style={{ color: "red" }}>
+              {errors.password}
+            </p>
+          )}
+        </label> */}
         </label>
         <label>
           Role:
@@ -43,9 +53,9 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
             component="select"
             placeholder="diet"
           >
-            <option value="Herbivore">Herbivore</option>
-            <option value="Carnivore">Carnivore</option>
-            <option value="Omnivore">Omnivore</option>
+            <option value="Frontend">Frontend</option>
+            <option value="WebUI">WebUI</option>
+            <option value="Backend">Backend</option>
           </Field>
         </label>
         <label htmlFor="vaccinations" className="checkbox-container">
@@ -74,7 +84,7 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
       {users.map(user => (
         <ul key={user.id}>
           <li>Name: {user.name}</li>
-          <li>Size: {user.size}</li>
+          <li>email: {user.email}</li>
           <li>Food: {user.diet}</li>
         </ul>
       ))}
@@ -83,10 +93,10 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
 };
 
 const FormikOnboardingForm = withFormik({
-  mapPropsToValues({ name, size, diet, vaccinations, notes }) {
+  mapPropsToValues({ name, email, diet, vaccinations, notes }) {
     return {
       name: name || "",
-      size: size || "",
+      email: email || "",
       diet: diet || "",
       vaccinations: vaccinations || false,
       notes: notes || ""
@@ -94,7 +104,7 @@ const FormikOnboardingForm = withFormik({
   },
   validationSchema: Yup.object().shape({
     name: Yup.string().required(),
-    size: Yup.string().required()
+    email: Yup.string().required()
   }),
   handleSubmit(values, { setStatus, resetForm }) {
     console.log("submitting", values);
