@@ -3,26 +3,26 @@ import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 const OnboardingForm = ({ values, touched, errors, status }) => {
-  const [animals, setAnimals] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     console.log(status);
-    status && setAnimals(animals => [...animals, status]);
+    status && setUsers(users => [...users, status]);
   }, [status]);
   return (
-    <div className="animal-form">
+    <div className="user-form">
       <Form>
         <label>
           Name
           <Field
-            id="species"
+            id="name"
             type="text"
-            name="species"
-            placeholder="species"
+            name="name"
+            placeholder="name"
           />
-          {touched.species && errors.species && (
+          {touched.name && errors.name && (
             <p className="errors" style={{ color: "red" }}>
-              {errors.species}
+              {errors.name}
             </p>
           )}
         </label>
@@ -36,7 +36,7 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
           )}
         </label>
         <label>
-          Diet:
+          Role:
           <Field
             name="diet"
             className="food-select"
@@ -49,7 +49,7 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
           </Field>
         </label>
         <label htmlFor="vaccinations" className="checkbox-container">
-          Vaccinations:
+          Terms of Service
           <Field
             id="vaccinations"
             type="checkbox"
@@ -71,11 +71,11 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
         <button type="submit">Submit!</button>
       </Form>
       <pre>{JSON.stringify(values, null, 2)}</pre>
-      {animals.map(animal => (
-        <ul key={animal.id}>
-          <li>Species: {animal.species}</li>
-          <li>Size: {animal.size}</li>
-          <li>Food: {animal.diet}</li>
+      {users.map(user => (
+        <ul key={user.id}>
+          <li>Name: {user.name}</li>
+          <li>Size: {user.size}</li>
+          <li>Food: {user.diet}</li>
         </ul>
       ))}
     </div>
@@ -83,9 +83,9 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
 };
 
 const FormikOnboardingForm = withFormik({
-  mapPropsToValues({ species, size, diet, vaccinations, notes }) {
+  mapPropsToValues({ name, size, diet, vaccinations, notes }) {
     return {
-      species: species || "",
+      name: name || "",
       size: size || "",
       diet: diet || "",
       vaccinations: vaccinations || false,
@@ -93,7 +93,7 @@ const FormikOnboardingForm = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    species: Yup.string().required(),
+    name: Yup.string().required(),
     size: Yup.string().required()
   }),
   handleSubmit(values, { setStatus, resetForm }) {
