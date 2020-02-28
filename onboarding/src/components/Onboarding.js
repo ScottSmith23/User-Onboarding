@@ -38,38 +38,37 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
         <label>
           Password:
           <Field id="password" type="password" name="password" placeholder="password" />
-          {/* {touched.password && errors.password && (
+          {touched.password && errors.password && (
             <p className="errors" style={{ color: "red" }}>
               {errors.password}
             </p>
           )}
-        </label> */}
         </label>
         <label>
           Role:
           <Field
-            name="diet"
+            name="role"
             className="food-select"
             component="select"
-            placeholder="diet"
+            placeholder="role"
           >
             <option value="Frontend">Frontend</option>
             <option value="WebUI">WebUI</option>
             <option value="Backend">Backend</option>
           </Field>
         </label>
-        <label htmlFor="vaccinations" className="checkbox-container">
+        <label htmlFor="termsOfService" className="checkbox-container">
           Terms of Service
           <Field
-            id="vaccinations"
+            id="termsOfService"
             type="checkbox"
-            name="vaccinations"
-            checked={values.vaccinations}
+            name="termsOfService"
+            checked={values.termsOfService}
           />
           <span className="checkmark" />
         </label>
         <label htmlFor="notes">
-          deScript0re:
+          About You:
           <Field
             id="notes"
             component="textarea"
@@ -85,7 +84,7 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
         <ul key={user.id}>
           <li>Name: {user.name}</li>
           <li>email: {user.email}</li>
-          <li>Food: {user.diet}</li>
+          <li>Password: {user.password}</li>
         </ul>
       ))}
     </div>
@@ -93,18 +92,20 @@ const OnboardingForm = ({ values, touched, errors, status }) => {
 };
 
 const FormikOnboardingForm = withFormik({
-  mapPropsToValues({ name, email, diet, vaccinations, notes }) {
+  mapPropsToValues({ name, email,password, role, termsOfService, notes }) {
     return {
       name: name || "",
       email: email || "",
-      diet: diet || "",
-      vaccinations: vaccinations || false,
+      password: password || "",
+      role: role || "",
+      termsOfService: termsOfService || false,
       notes: notes || ""
     };
   },
   validationSchema: Yup.object().shape({
     name: Yup.string().required(),
-    email: Yup.string().required()
+    email: Yup.string().required(),
+    password: Yup.string().required()
   }),
   handleSubmit(values, { setStatus, resetForm }) {
     console.log("submitting", values);
